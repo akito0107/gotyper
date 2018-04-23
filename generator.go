@@ -93,9 +93,7 @@ func (g *Generator) Generate(types []*ast.TypeSpec) error {
 					},
 					Args: []ast.Expr{
 						&ast.CompositeLit{
-							Type: &ast.Ident{
-								Name: "Test",
-							},
+							Type: ast.NewIdent(t.Name.Name),
 							Elts: []ast.Expr{},
 						},
 					},
