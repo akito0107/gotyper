@@ -27,7 +27,7 @@ import "reflect"
 var TypesMapper map[string]reflect.Type
 
 func init() {
-	TypesMapper = new(map[string]reflect.Type)
+	TypesMapper = map[string]reflect.Type{}
 	TypesMapper["Test"] = reflect.TypeOf(Test{})
 }
 `

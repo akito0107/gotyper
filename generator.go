@@ -60,17 +60,15 @@ func (g *Generator) Generate(types []*ast.TypeSpec) error {
 			ast.NewIdent("TypesMapper"),
 		},
 		Rhs: []ast.Expr{
-			&ast.CallExpr{
-				Fun: ast.NewIdent("new"),
-				Args: []ast.Expr{
-					&ast.MapType{
-						Key: ast.NewIdent("string"),
-						Value: &ast.SelectorExpr{
-							X:   ast.NewIdent("reflect"),
-							Sel: ast.NewIdent("Type"),
-						},
+			&ast.CompositeLit{
+				Type: &ast.MapType{
+					Key: ast.NewIdent("string"),
+					Value: &ast.SelectorExpr{
+						X:   ast.NewIdent("reflect"),
+						Sel: ast.NewIdent("Type"),
 					},
 				},
+				Elts: []ast.Expr{},
 			},
 		},
 	}

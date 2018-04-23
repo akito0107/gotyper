@@ -3,7 +3,12 @@ package gotyper_test
 import (
 	"testing"
 
+	"fmt"
+	"go/parser"
+	"go/token"
+
 	"github.com/akito0107/gotyper"
+	"github.com/k0kubun/pp"
 )
 
 func TestParse(t *testing.T) {
@@ -75,23 +80,22 @@ type (
 	}
 }
 
-//func TestParse2(t *testing.T) {
-//	expect := `
-//package main
-//
-//import "reflect"
-//
-//var TypesMapper map[string]reflect.Type
-//
-//func init() {
-//  typeMapper := new(map[string]reflect.Type)
-//  typeMapper["Test"] = reflect.TypeOf(Test{})
-//}
-//`
-//
-//	fset := token.NewFileSet()
-//	f, _ := parser.ParseFile(fset, "", expect, 0)
-//	fmt.Println(token.VAR)
+func TestParse2(t *testing.T) {
+	expect := `
+package main
 
-//	pp.Print(f)
-//}
+import "reflect"
+
+var TypesMapper map[string]reflect.Type
+
+func init() {
+  typeMapper := map[string]reflect.Type{}
+  typeMapper["Test"] = reflect.TypeOf(Test{})
+}
+`
+
+	fset := token.NewFileSet()
+	f, _ := parser.ParseFile(fset, "", expect, 0)
+	fmt.Println(token.VAR)
+	pp.Print(f)
+}
