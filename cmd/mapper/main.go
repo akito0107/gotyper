@@ -2,18 +2,12 @@ package main
 
 import (
 	"flag"
-
-	"io/ioutil"
-
-	"log"
-
-	"os"
-
-	"strings"
-
 	"go/ast"
-
 	"io"
+	"io/ioutil"
+	"log"
+	"os"
+	"strings"
 
 	"github.com/akito0107/gotyper"
 )
