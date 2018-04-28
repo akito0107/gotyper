@@ -31,7 +31,7 @@ func init() {
 	TypesMapper["Test"] = reflect.TypeOf(Test{})
 }
 `
-	types, _ := gotyper.Parse(in)
+	types, _, _ := gotyper.Parse(in)
 	if err := g.Generate(types); err != nil {
 		t.Fatal(err)
 	}

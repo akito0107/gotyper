@@ -10,6 +10,7 @@ func TestParse(t *testing.T) {
 	cases := []struct {
 		name string
 		in   string
+		pkg  string
 		out  []string
 	}{
 		{
@@ -20,15 +21,17 @@ type Test struct {
   label string
 }
 `,
+			pkg: "main",
 			out: []string{"Test"},
 		},
 		{
 			name: "Named Types",
-			in: `package main
+			in: `package other
 type Int int
 type Uint uint
 type Map map[string]string
 `,
+			pkg: "other",
 			out: []string{"Int", "Uint", "Map"},
 		},
 		{
@@ -51,19 +54,23 @@ type (
 	}
 )
 `,
+			pkg: "main",
 			out: []string{"Spec", "ImportSpec"},
 		},
 	}
 
 	for _, c := range cases {
 		t.Run(c.name, func(t *testing.T) {
-			types, err := gotyper.Parse(c.in)
+			types, pkg, err := gotyper.Parse(c.in)
 			if err != nil {
 				t.Fatal(err)
 			}
 
 			if len(types) != len(c.out) {
 				t.Errorf("should be same length: %v", types)
+			}
+			if pkg != c.pkg {
+				t.Errorf("must be %s but %s", pkg, c.pkg)
 			}
 
 			for i := 0; i < len(types); i++ {
