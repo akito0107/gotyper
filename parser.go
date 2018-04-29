@@ -16,8 +16,8 @@ func Parse(file string) ([]*ast.TypeSpec, string, error) {
 	var pkgName string
 	ast.Inspect(f, func(n ast.Node) bool {
 		switch x := n.(type) {
-		case *ast.Package:
-			pkgName = x.Name
+		case *ast.File:
+			pkgName = x.Name.Name
 		case *ast.TypeSpec:
 			types = append(types, x)
 		}

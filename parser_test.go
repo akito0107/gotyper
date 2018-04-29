@@ -81,23 +81,3 @@ type (
 		})
 	}
 }
-
-//func TestParse2(t *testing.T) {
-//	expect := `
-//package main
-//
-//import "reflect"
-//
-//var TypesMapper map[string]reflect.Type
-//
-//func init() {
-//  typeMapper := map[string]reflect.Type{}
-//  typeMapper["Test"] = reflect.TypeOf(Test{})
-//}
-//`
-//
-//	fset := token.NewFileSet()
-//	f, _ := parser.ParseFile(fset, "", expect, 0)
-//	fmt.Println(token.VAR)
-//	pp.Print(f)
-//}

@@ -12,7 +12,7 @@ import (
 
 func TestGenerator_Generate(t *testing.T) {
 	var buf bytes.Buffer
-	g := gotyper.NewGenerator(&buf)
+	g := gotyper.NewGenerator(&buf, "main")
 
 	in := `
 package main

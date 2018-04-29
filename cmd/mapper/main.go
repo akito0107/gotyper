@@ -10,6 +10,7 @@ import (
 	"strings"
 
 	"github.com/akito0107/gotyper"
+	"github.com/pkg/errors"
 )
 
 var dryrun = flag.Bool("dryrun", false, "dryrun mode")
@@ -33,6 +34,7 @@ func main() {
 	}
 
 	var spec []*ast.TypeSpec
+	var pkgName string
 
 	for _, f := range files {
 		file, err := os.Open(*path + f.Name())
@@ -43,10 +45,14 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		s, err := gotyper.Parse(string(b))
+		s, pkg, err := gotyper.Parse(string(b))
 		if err != nil {
 			log.Fatal(err)
 		}
+		if pkgName != "" && pkgName != pkg {
+			log.Fatal(errors.Errorf("multiple package: %s, %s", pkgName, pkg))
+		}
+		pkgName = pkg
 		spec = append(spec, s...)
 	}
 	var out io.Writer
@@ -60,7 +66,7 @@ func main() {
 		out = f
 	}
 
-	gen := gotyper.NewGenerator(out)
+	gen := gotyper.NewGenerator(out, pkgName)
 	if err := gen.Generate(spec); err != nil {
 		log.Fatal(err)
 	}

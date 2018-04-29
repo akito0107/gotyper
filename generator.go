@@ -10,17 +10,17 @@ import (
 
 type Generator struct {
 	w   io.Writer
-	pak string
+	pkg string
 }
 
-func NewGenerator(w io.Writer) *Generator {
-	return &Generator{w, "main"}
+func NewGenerator(w io.Writer, pkg string) *Generator {
+	return &Generator{w, pkg}
 }
 
 func (g *Generator) Generate(types []*ast.TypeSpec) error {
 
 	f := &ast.File{
-		Name: ast.NewIdent(g.pak),
+		Name: ast.NewIdent(g.pkg),
 	}
 
 	var decls []ast.Decl
